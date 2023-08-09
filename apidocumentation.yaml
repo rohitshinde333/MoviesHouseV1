@@ -1,0 +1,363 @@
+openapi: 3.0.0
+info:
+  title: Movie Ticket Booking API
+  description: An API for managing movie ticket booking system
+  version: "1.0.0"
+  author: "Rohit Vishwas Shinde"
+  email: "21f3002241@ds.study.iitm.ac.in"
+servers:
+  - url: http://127.0.0.1:5000
+paths:
+  /theatres:
+    get:
+      summary: Get all theatres
+      responses:
+        "200":
+          description: A list of theatres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the theatre
+                    place_id:
+                      type: integer
+                      description: The ID of the place where the theatre is located
+                    photo:
+                      type: string
+                      format: binary
+                      description: The photo of the theatre in binary format
+                  required:
+                    - name
+                    - place_id
+                    - photo
+    post:
+      summary: Create a new theatre
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the theatre
+                photo:
+                  type: string
+                  description: The URL of the theatre's photo
+                place_id:
+                  type: integer
+                  description: The ID of the place where the theatre is located
+              required:
+                - name
+                - photo
+                - place_id
+      responses:
+        "201":
+          description: The created theatre
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+
+  /theatres/{theatre_id}:
+    get:
+      summary: Get a single theatre by ID
+      parameters:
+        - name: theatre_id
+          in: path
+          description: ID of the theatre to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The theatre object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+        "404":
+          description: Theatre not found
+    put:
+      summary: Update a single theatre by ID
+      parameters:
+        - name: theatre_id
+          in: path
+          description: ID of the theatre to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+      responses:
+        "200":
+          description: The updated theatre object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+        "404":
+          description: Theatre not found
+    delete:
+      summary: Delete a single theatre by ID
+      parameters:
+        - name: theatre_id
+          in: path
+          description: ID of the theatre to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success message
+        "404":
+          description: Theatre not found
+
+  /shows:
+    get:
+      summary: Get all shows
+      responses:
+        "200":
+          description: A list of shows
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the show
+                    movie_id:
+                      type: integer
+                      description: The ID of the movie being shown
+                    time:
+                      type: string
+                      format: date-time
+                      description: The date and time of the show in ISO 8601 format
+                    screen_id:
+                      type: integer
+                      description: The ID of the screen where the show is being held
+                  required:
+                    - id
+                    - movie_id
+                    - time
+                    - screen_id
+    post:
+      summary: Create a new show
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+      responses:
+        "201":
+          description: The created show
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+
+  /shows/{show_id}:
+    get:
+      summary: Get a single show by ID
+      parameters:
+        - name: show_id
+          in: path
+          description: ID of the show to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The show object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+    put:
+      summary: Update a single show by ID
+      parameters:
+        - name: show_id
+          in: path
+          description: ID of the show to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+      responses:
+        "200":
+          description: The updated show object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the theatre
+                  place_id:
+                    type: integer
+                    description: The ID of the place where the theatre is located
+                  photo:
+                    type: string
+                    format: binary
+                    description: The photo of the theatre in binary format
+                required:
+                  - name
+                  - place_id
+                  - photo
+                
+        "404":
+          description: Show not found
+    delete:
+      summary: Delete a single show by ID
+      parameters:
+        - name: show_id
+          in: path
+          description: ID of the show to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success message
+        "404":
+          description: Show not found
