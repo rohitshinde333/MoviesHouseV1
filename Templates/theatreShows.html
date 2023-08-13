@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theatres</title>
+    <style>
+      .vl {
+  border-left: 6px solid green;
+  height: 645px;
+  position: absolute;
+  left: 20%;
+  margin-left: -3px;
+  top: 100px;
+}
+    </style>
+    <style>
+      html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 100px;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            
+            <h1 style="color:brown">MoviesHouse</h1>
+          </a>
+          <a class="navbar-brand" href="/" style="color:green;margin-left: 600px;">
+            @{{user.username}}
+          </a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                     
+              
+            </ul>
+            
+          </div>
+        </div>
+
+        <button type="button" style="background-color: rgb(206, 76, 76); margin-right: 3%; width:100px"><a href="{{url_for('logout')}}" style="color: black;">Sign Out</a></button>
+
+
+
+      </nav>
+      <div class="container">
+        <div class="row" style="height:645px ;width: 1400px;">
+          <div class="col-2">
+            <h4 style="margin-left:-70px;color:brown;margin-top:40px;font-size: xx-large;"><a href="{{url_for('dashboard')}}"style="color:black;  " >- Dashboard</a></h4>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('user_profile')}}" style="color:black">- Profile</a></h5>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('showMovie')}}" style="color:black">- Movies</a></h5>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('topmovies')}}" style="color:black">- Top 10 Trending</a></h5>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('showTheatres')}}" style="color:black">- Theatres</a></h5>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('showStars')}}" style="color:black">- Stars</a></h5>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('tickets')}}" style="color:black">- Tickets</a></h5>
+            <h4 style="margin-left:-70px;color:black;margin-top:20px;font-size: xx-large;"><a href="{{url_for('feedback')}}" style="color:black">- Feedback</a></h5>
+            <p style="margin-left:-70px;color:brown;margin-top:50px;font-size: large;">MoviesHouse is commited to serve customers firsts. Beyond Profit and loss we measure our success in terms of customer satisfaction. Feel free to write us your valuable feedback.</p>
+          </div>
+          
+          <div class="col-10" style="background-color: rgb(183, 137, 137);">
+            
+            {% for show in shows %}
+                <div class="card" style="width: 80%; margin-top: 30px;margin-left: 10%;">
+                
+                <div class="card-body">
+                  <h5 class="card-title">{{show}} </h5>
+                  <h5 class="card-text">{{show.time}}</h5>
+                  
+                </div>
+                <ul class="list-group list-group-flush">
+                  
+                </ul>
+                <div class="card-body" >
+                  <a href="/bookSeats/{{show.id}}/{{show.screen_id}}" class="card-link">Book Tickets</a>
+                  {% if current_user.id == 1 %}
+                    <a class="navbar-brand" href="/updateShow/{{show.id}}" style="color:rgb(198, 94, 66);margin-left: 10px;">
+                    Update Show
+                    </a>
+                    <a class="navbar-brand" href="/updateScreen/{{show.screen_id}}" style="color:rgb(198, 94, 66);margin-left: 10px;">
+                      Update Screen
+                      </a>
+                      <a class="navbar-brand" href="/deleteShow/{{show.id}}" style="color:rgb(198, 94, 66);margin-left: 10px;">
+                        Delete Show
+                        </a>
+                        
+                          <a class="navbar-brand" href="/deleteTickets/{{show.id}}" style="color:rgb(198, 94, 66);margin-left: 10px;">
+                            Delete all tickets
+                            </a>
+                            <a class="navbar-brand" href="/deleteScreen/{{show.screen_id}}" style="color:rgb(198, 94, 66);margin-left: 10px;">
+                              Delete Screen
+                              </a>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+            
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
